@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -49,7 +10,7 @@
     <!-- Open Graph Tags -->
     <meta property="og:title" content="Unicorn Coloring Book for Kids">
     <meta property="og:description" content="Free unicorn coloring game for kids! Paint magical unicorns and spark creativity. Download now on Google Play.">
-    <meta property="og:image" content="https://via.placeholder.com/1200x630?text=Unicorn+Coloring+Book">
+    <meta property="og:image" content="assets/images/unicorn-coloring-book-kids-screenshot-1.jpg">
     <meta property="og:url" content="https://yourwebsite.com">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -69,7 +30,7 @@
             <h2 class="text-4xl font-bold text-purple-800 mb-4">Best Unicorn Coloring Book for Kids! 🦄✨</h2>
             <p class="text-lg text-gray-700 mb-6">A free kids coloring game to paint magical unicorns and spark creativity!</p>
             <a href="https://play.google.com/store/apps/details?id=com.ying.unicorncoloringbook" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700">Get it on Google Play</a>
-            <img src="https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-c098-61f7-80df-5cbf821ce987/raw?se=2025-05-10T16%3A28%3A24Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=c953efd6-2ae8-41b4-a6d6-34b1475ac07c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-09T20%3A41%3A00Z&ske=2025-05-10T20%3A41%3A00Z&sks=b&skv=2024-08-04&sig=tRGHKlcInQYuAf4nwW3IwAg6LSoC8yDgWHe1MEwqzB0%3D" alt="Unicorn Coloring Book for Kids Gameplay" class="mt-8 mx-auto rounded-lg shadow-lg max-w-full">
+            <img src="assets/images/unicorn-coloring-book-kids-screenshot-1.png" alt="Unicorn Coloring Book for Kids Gameplay" class="mt-8 mx-auto rounded-lg shadow-lg max-w-full">
         </div>
     </section>
 
@@ -79,17 +40,17 @@
             <h2 class="text-3xl font-bold text-purple-800 text-center mb-8">Why Choose Our Kids Coloring Game?</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center">
-                    <img src="https://sdmntprwestus3.oaiusercontent.com/files/00000000-3404-61fd-9682-00f85d506163/raw?se=2025-05-10T16%3A37%3A00Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=c953efd6-2ae8-41b4-a6d6-34b1475ac07c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-09T21%3A39%3A10Z&ske=2025-05-10T21%3A39%3A10Z&sks=b&skv=2024-08-04&sig=ci98ECJojdsBn3/kLoK9Y8yqdtxkH7NiD2T4AMiJFDc%3D" alt="Cute Unicorn Drawings" class="mx-auto mb-4">
+                    <img src="assets/images/unicorn-icon-1.png" alt="Cute Unicorn Drawings" class="mx-auto mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Hundreds of Unicorn Drawings</h3>
                     <p class="text-gray-600">Explore adorable unicorn-themed coloring pages, updated regularly.</p>
                 </div>
                 <div class="text-center">
-                    <img src="https://sdmntprwestus3.oaiusercontent.com/files/00000000-a3f8-61fd-b0ad-4cd8ea5508c3/raw?se=2025-05-10T16%3A44%3A50Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=c953efd6-2ae8-41b4-a6d6-34b1475ac07c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-09T21%3A19%3A13Z&ske=2025-05-10T21%3A19%3A13Z&sks=b&skv=2024-08-04&sig=qzCNHZFuXNQueGOL9ko1ne7lb0G6dTBxgRy67l1IABc%3D" alt="Rainbow Colors" class="mx-auto mb-4">
+                    <img src="assets/images/unicorn-icon-2.png" alt="Rainbow Colors for Kids" class="mx-auto mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Rainbow Colors & Effects</h3>
                     <p class="text-gray-600">Use glitter, rainbow palettes, and magical effects for sparkling art.</p>
                 </div>
                 <div class="text-center">
-                    <img src="https://sdmntprwestus.oaiusercontent.com/files/00000000-2438-6230-ae7e-a81d188745cb/raw?se=2025-05-10T17%3A07%3A47Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=c156db82-7a33-468f-9cdd-06af263ceec8&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-10T14%3A29%3A18Z&ske=2025-05-11T14%3A29%3A18Z&sks=b&skv=2024-08-04&sig=rDvVbGo4kJIVmZMthedT0m6vNixzZQ6ilbbytOxLd7w%3D" alt="Safe Kids Coloring App" class="mx-auto mb-4">
+                    <img src="assets/images/unicorn-icon-3.png" alt="Safe Kids Coloring App" class="mx-auto mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Safe & Kid-Friendly</h3>
                     <p class="text-gray-600">Free unicorn coloring app for kids with no intrusive ads.</p>
                 </div>
@@ -117,7 +78,7 @@
             <p>© 2025 Unicorn Coloring Book for Kids. All rights reserved.</p>
             <div class="mt-2">
                 <a href="https://play.google.com/store/apps/details?id=com.ying.unicorncoloringbook" class="text-yellow-300 hover:underline">Download on Google Play</a> |
-                <a href="https://www.freeprivacypolicy.com/live/66032489-50b4-43a6-b7fe-97dfe82aa68d" class="text-yellow-300 hover:underline">Privacy Policy</a>
+                <a href="https://www.freeprivacypolicy.com/live/66032489-50b4-43a6-b7fe-97dfe82aa68d" class="text-yellow-300 hover:underline">Privacy Policy</a> 
                 <!-- <a href="/contact" class="text-yellow-300 hover:underline">Contact Us</a> |
                 <a href="/blog" class="text-yellow-300 hover:underline">Blog</a> -->
             </div>
